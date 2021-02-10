@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/answer.dart';
 import 'package:flutter_complete_guide/question.dart';
 
 void main() {
@@ -25,9 +26,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      'What\'s your favourite color?',
-      'What\'s your favourite animal?',
+    const questions = [
+      {
+        "questionText": "What\'s your favourite color?",
+        "answers": ["Black", "Red", "Green", "White"]
+      },
+      {
+        "questionText": "What\'s your favourite animal?",
+        "answers": ["Dog", "Cat", "Snake", "Lion"]
+      },
+      {
+        "questionText": "Who\'s your favourite instructor?",
+        "answers": ["A", "B", "C", "D"]
+      },
     ];
 
     return MaterialApp(
@@ -38,20 +49,12 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: <Widget>[
             Question(
-              questions[_questionIndex],
+              questions[_questionIndex]['questionText'],
             ),
-            RaisedButton(
-              onPressed: _answerQuestion,
-              child: Text("Answer 1"),
-            ),
-            RaisedButton(
-              onPressed: _answerQuestion,
-              child: Text("Answer 2"),
-            ),
-            RaisedButton(
-              onPressed: _answerQuestion,
-              child: Text("Answer 3"),
-            ),
+            ...(questions[_questionIndex]['answers'] as List<String>)
+                .map((answer) {
+              return Answer(_answerQuestion, answer);
+            }).toList(),
           ],
         ),
       ),
